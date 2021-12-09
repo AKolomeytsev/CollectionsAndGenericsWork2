@@ -2,10 +2,7 @@ package pro.sky.java.course2.Service;
 
 import pro.sky.java.course2.Data.DoubleWords;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ServiceList<T> {
     private List<T> items;
@@ -14,31 +11,24 @@ public class ServiceList<T> {
         this.items = items;
     }
 
-    public ArrayList<T> getOddItems(){
+    public LinkedList<T> getOddItems(){
         items.removeIf(e -> (int)e % 2 == 0);
-        return (ArrayList<T>) items;
+        return (LinkedList<T>) items;
     }
 
     public Set<T> getEvenItemsDistinct(){
-        Set<T> items2 = new HashSet<T>();
-        for (int i = 0; i<items.size();i++){
-            items2.add(items.get(i));
-        }
+        Set<T> items2 = new TreeSet<>(items);
         items2.removeIf(e -> (int)e % 2 == 1);
-        return (Set<T>)items2;
+        return items2;
     }
 
     public Set<T> getWordsDistinct(){
-        Set<T> items2 = new HashSet<T>();
-        for (int i = 0; i<items.size();i++){
-            items2.add(items.get(i));
-        }
-
-        return (Set<T>)items2;
+        Set<T> items2 = new HashSet<T>(items);
+        return items2;
     }
 
     public ArrayList<DoubleWords> getDoubleWords(){
-        Set<T> items2 = new HashSet<T>();
+        Set<T> items2 = new HashSet<T>(items);
         ArrayList<DoubleWords> dw = new ArrayList<DoubleWords>();
         for (int i = 0; i<items.size();i++){
             items2.add(items.get(i));
@@ -61,8 +51,13 @@ public class ServiceList<T> {
             }
             items2.remove(word);
         };
-
         return dw;
+    }
+
+    public int getCoutDoubleWords(){
+        Set<T> items2 = new HashSet<T>(items);
+
+        return items.size() - items2.size();
     }
 
 
